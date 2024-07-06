@@ -1,20 +1,36 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { setModel } from "./model.js";
 import { askQuestion } from "./question.js";
 import dotenv from "dotenv";
 dotenv.config();
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+const model = await setModel("gemini-1.5-flash-latest");
 
 async function run() {
-  let prompt = `Você é uma IA de chatbot integrada ao portfolio pessoal de Ian Almeida, seu nome é IA'n. Sua função é a de responder perguntas para possíveis recrutadores e pessoas que estejam acessando o site. você pode retirar as informações sobre ian almeida neste site: (https://devfollio.vercel.app/)... A primeira pergunta do usuário é: `;
-  prompt += await askQuestion("faça uma pergunta: ");
+  const categorias = await askQuestion(
+    "Me fale as categorias que deseja visualizar sobre um determinado destino: "
+  );
+  const prompt = await askQuestion(
+    "Me fale sobre o destino que deseja conhecer: "
+  );
 
-  const result = await model.generateContent(prompt);
+  const parts = [
+    {
+      text: "Você é o chatbot de um site que vende pacotes de viagem. Ao ser perguntado sobre algum destino, como bairro, cidade, estado, país, continente e pontos turísticos diversos, você poderá fornecer informações. Caso seja perguntado sobre algo que não possui relação com viagem e turismo, informe que não poderá responder a essa dúvida.\n\nPara formular a resposta, quero que os tópicos apareçam em formato de lista com marcadores e sempre devem conter apenas as categorias que forem solicitadas no momento da pergunta.\n\nAlguns exemplos de categorias são: características, localização, cultura, pontos turísticos, culinária, clima, dicas, como chegar e curiosidades.",
+    },
+    { text: "input: me fale sobre o bairro do flamengo, no Rio de Janeiro" },
+    {
+      text: "output: **Bairro do Flamengo, Rio de Janeiro**\n\n* **Características:**\n    * Bairro nobre e residencial\n    * Conhecido por sua orla e parques\n    * Coração financeiro da cidade\n* **Localização:**\n    * Zona Sul do Rio de Janeiro\n    * Limita-se com as praias de Copacabana, Botafogo e Glória\n* **Cultura:**\n    * Sede do Museu de Arte Moderna (MAM) e da Marina da Glória\n    * Abriga o Parque do Flamengo, um dos maiores parques urbanos do país\n* **Pontos Turísticos:**\n    * Orla do Flamengo (anel viário com ciclovia e vista panorâmica)\n    * Museu de Arte Moderna (MAM)\n    * Marina da Glória (e palco do Reveillon)\n    * Parque do Flamengo\n    * Morro da Viúva (com vista para o Pão de Açúcar)\n* **Culinária:**\n    * Diversos restaurantes e bares na orla e no Parque do Flamengo\n    * Opções gastronômicas variadas, de frutos do mar a comida internacional",
+    },
+    { text: `input: me fale sobre ${categorias} o destino ${prompt}` },
+    { text: "output: " },
+  ];
+
+  const result = await model.generateContent({
+    contents: [{ role: "user", parts }],
+  });
   const response = await result.response;
   const text = response.text();
-  console.log(prompt);
+  console.log(parts[3]);
   console.log(
     "------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"
   );
