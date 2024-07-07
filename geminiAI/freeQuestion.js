@@ -16,10 +16,26 @@ export async function freeQuestion() {
     { text: "output: " },
   ];
 
+  const requisicao = {
+    contents: [{ role: "user", parts }],
+  };
   const result = await model.generateContent({
     contents: [{ role: "user", parts }],
   });
+  console.log(
+    "\n - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Total entrada tokens - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n"
+  );
+  const totalTokensEntrada = await model.countTokens(requisicao);
+  console.log(`Total tokens de entrada: ${totalTokensEntrada.totalTokens}`);
+  console.log(
+    " \n - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Resultado gerado - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n"
+  );
   const response = await result.response;
   const text = response.text();
   console.log(text);
+  console.log(
+    " \n - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - Total tokens gastos - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n "
+  );
+  const totalTokensSaida = await model.countTokens(text);
+  console.log(`Total tokens de saida: ${totalTokensSaida.totalTokens}`);
 }
