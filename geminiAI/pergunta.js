@@ -1,9 +1,9 @@
-import readline from "readline";
+import readline from 'readline';
 
-export function askQuestion(pergunta) {
+export function fazerPergunta(pergunta) {
   const rl = readline.createInterface({
     input: process.stdin,
-    output: process.stdout,
+    output: process.stdout
   });
 
   return new Promise((resolve) => {
