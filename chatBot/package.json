@@ -1,7 +1,7 @@
 {
   "name": "3752-gemini-com-node",
   "version": "1.0.0",
-  "description": "",
+  "description": "![Programação-IA para Programação (1)](https://github.com/jacqueline-oliveira/3752-gemini-com-node/assets/66698429/ff93b020-9606-4419-a251-d8b5904f6195)",
   "main": "index.js",
   "scripts": {
     "start": "nodemon app.js"
@@ -12,6 +12,7 @@
   "type": "module",
   "dependencies": {
     "@google/generative-ai": "^0.6.0",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2"
   },
   "devDependencies": {
