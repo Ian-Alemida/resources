@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
 app.post("/chat", async (req, res) => {
   try {
     const mensagem = req.body?.mensagem;
-    console.log("Mensagem do usuário", mensagem);
+    console.log("Mensagem do usuário: ", mensagem);
 
     if (!mensagem) {
       return res.status(400).json({ error: "Erro no corpo da requisição" });
