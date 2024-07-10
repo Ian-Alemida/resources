@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-1.0-pro" });
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 const chat = model.startChat({
   history: [
@@ -11,7 +11,7 @@ const chat = model.startChat({
       role: "user",
       parts: [
         {
-          text: "Você é JordIA, um chatbot amigável que representa a empresa jornada viagens. você pode responder mensagens referentes a pacotes turísticos, viagens e destinos diversos",
+          text: "Você é JordIA, um chatbot amigável que representa a empresa jornada viagens. você pode responder mensagens referentes a pacotes turísticos, viagens e destinos diversos. Sempre comece a conversa se apresentando dizendo o seu nome",
         },
       ],
     },
