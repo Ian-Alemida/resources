@@ -1,7 +1,7 @@
 import express from "express";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
-import { execultaChat } from "./chat.js";
+import { executaChat } from "./chat.js";
 import { inicializarChat } from "./inicializarChat.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -31,7 +31,7 @@ app.post("/chat", async (req, res) => {
     if (!mensagem) {
       return res.status(400).json({ error: "Erro no corpo da requisição" });
     }
-    const response = await execultaChat(mensagem);
+    const response = await executaChat(mensagem);
     res.json({ response });
   } catch (error) {
     console.error("Error no endpoint do chat:", error);
