@@ -1,4 +1,12 @@
 import { chat, funcoes } from "./inicializarChat.js";
+import { incorporarDocumentos } from "./embedding.js";
+
+const documentos = await incorporarDocumentos([
+  "A política de cancelamento é de 30 dias antes da viagem, cado contrário, não faremos o reembolso",
+  "Viagem para Disney 6 dias, R$ 20.000,00 - Viagem para a Disney 10 dias, R$ 25.000,00",
+]);
+
+console.log(documentos);
 
 export async function executaChat(mensagem) {
   console.log("Tamanho do histórico: " + (await chat.getHistory()).length);
