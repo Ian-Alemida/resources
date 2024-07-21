@@ -1,11 +1,18 @@
 import { chat, funcoes } from "./inicializarChat.js";
-import { incorporarDocumentos, incorporarPergunta } from "./embedding.js";
+import {
+  incorporarDocumentos,
+  incorporarPergunta,
+  leArquivos,
+} from "./embedding.js";
 
-// Definindo documentos usados pelo método embedding
-const documentos = await incorporarDocumentos([
-  "A política de cancelamento é de 30 dias antes da viagem para receber reembolso total, caso cancele faltando menos de 30 dias não será feito reembolso",
-  "Viagem para Disney 6 dias, R$ 20.000,00 - Viagem para a Disney 10 dias, R$ 25.000,00",
+// Definindo arquivos dentro do ambiente para alimentar os prompts
+const arquivos = await leArquivos([
+  "Pacotes_Argentina.txt",
+  "Pacotes_EUA.txt",
+  "Politicas.txt",
 ]);
+// Definindo documentos usados pelo método embedding
+const documentos = await incorporarDocumentos(arquivos);
 
 export async function executaChat(mensagem) {
   console.log("Tamanho do histórico: " + (await chat.getHistory()).length);
