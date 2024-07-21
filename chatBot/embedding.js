@@ -1,3 +1,5 @@
+// Embedding é uma técnica de processamento de linguagem natural que converte os textos em modelos vetoriais. Através dessa técnica o modelo consegue comparar a pergunta com os textos armazenados por ordem de relevância, comparando se um texto tem relação com alguma pergunta armazenada para assim ser feito o direcionamento correto e a resposta retornada ser mais assertiva.
+
 import { GoogleGenerativeAI, TaskType } from "@google/generative-ai";
 import { promises as fs } from "fs";
 
